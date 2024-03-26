@@ -34,3 +34,13 @@ CREATE TABLE orders (
     credits INT NOT NULL,
     currency VARCHAR(50)
 );
+
+CREATE TABLE words (
+    id SERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    word VARCHAR(255) NOT NULL,
+    word_category VARCHAR(50),
+    status SMALLINT NOT NULL,
+    created_at timestamptz,
+    updated_at timestamptz
+);

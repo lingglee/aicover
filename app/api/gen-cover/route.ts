@@ -18,8 +18,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { description } = await req.json();
-    if (!description) {
+    const { words } = await req.json();
+    if (!words) {
       return respErr("invalid params");
     }
 
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const img_size = "1024x1792";
 
     const llm_params: ImageGenerateParams = {
-      prompt: `Generate a brand story image about ${description}`,
+      prompt: `Generate a brand story image about ${words}`,
       model: llm_name,
       n: 1,
       quality: "hd",
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       return respErr("generate cover failed");
     }
 
-    const img_name = encodeURIComponent(description);
+    const img_name = encodeURIComponent(words);
     const s3_img = await downloadAndUploadImage(
       raw_img_url,
       process.env.AWS_BUCKET || "trysai",
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
 
     const cover: Cover = {
       user_email: user_email,
-      img_description: description,
+      img_description: words,
       img_size: img_size,
       img_url: img_url,
       llm_name: llm_name,

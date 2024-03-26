@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 export default function () {
   const router = useRouter();
   const { setCovers, user, fetchUserInfo } = useContext(AppContext);
-  const [description, setDiscription] = useState("");
+  const [vocabulary, setVocabulary] = useState("");
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -24,8 +24,8 @@ export default function () {
   };
 
   const handleSubmit = async () => {
-    console.log("description", description);
-    if (!description) {
+    console.log("vocabulary", vocabulary);
+    if (!vocabulary) {
       toast.error("请输入红包封面描述");
       inputRef.current?.focus();
       return;
@@ -39,7 +39,7 @@ export default function () {
 
     try {
       const params = {
-        description: description,
+        words: vocabulary,
       };
 
       setLoading(true);
@@ -58,7 +58,7 @@ export default function () {
         router.push("/sign-in");
         return;
       }
-      console.log("gen wallpaper resp", resp);
+      console.log("save vocabulary resp", resp);
 
       if (code !== 0) {
         toast.error(message);
@@ -66,7 +66,7 @@ export default function () {
       }
 
       fetchUserInfo();
-      setDiscription("");
+      setVocabulary("");
 
       toast.success("生成成功");
       if (data) {
@@ -83,10 +83,10 @@ export default function () {
       <input
         type="text"
         className="mb-1 h-9 w-full rounded-md border border-solid border-primary px-3 py-6 text-sm text-[#333333] focus:border-primary"
-        placeholder="输入要生成的红包封面描述"
+        placeholder="请输入你的单词"
         ref={inputRef}
-        value={description}
-        onChange={(e) => setDiscription(e.target.value)}
+        value={vocabulary}
+        onChange={(e) => setVocabulary(e.target.value)}
         onKeyDown={handleInputKeydown}
       />
       {loading ? (
@@ -94,14 +94,14 @@ export default function () {
           className="relative right-0 top-[5px] w-full cursor-pointer rounded-md bg-primary px-6 py-2 text-center font-semibold text-white sm:absolute sm:right-[5px] sm:w-auto"
           disabled
         >
-          生成中...
+          保存中...
         </button>
       ) : (
         <button
           className="relative right-0 top-[5px] w-full cursor-pointer rounded-md bg-primary border-primary px-6 py-2 text-center font-semibold text-white sm:absolute sm:right-[5px] sm:w-auto"
           onClick={handleSubmit}
         >
-          生成封面
+          点击保存
         </button>
       )}
     </div>

@@ -10,10 +10,10 @@ import type { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "微信红包封面生成器 ｜ AI Cover",
+  title: "AI智能单词本 ｜ AI English Vocabulary",
   description:
-    "微信红包封面生成器，利用 AI 技术生成高清精美的微信红包封面图片。",
-  keywords: "微信红包封面, 微信红包, AI 红包封面, AI Cover",
+    "智能英语单词学习工具，利用 AI 技术对单词本进行归纳和对话生成。",
+  keywords: "智能英语, 单词, AI English, AI Vocabulary",
 };
 
 export default function RootLayout({
