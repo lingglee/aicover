@@ -8,6 +8,8 @@ import { genUuid } from "@/lib";
 import { getOpenAIClient } from "@/services/openai";
 import { getUserCredits } from "@/services/order";
 import { insertCover } from "@/models/cover";
+import { HttpsProxyAgent } from "https-proxy-agent";
+
 
 export async function POST(req: Request) {
   const user = await currentUser();
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
 
     const user_credits = await getUserCredits(user_email);
     if (!user_credits || user_credits.left_credits < 1) {
-      return respErr("credits not enough");
+      //return respErr("credits not enough");
     }
 
     const client = getOpenAIClient();
@@ -44,7 +46,10 @@ export async function POST(req: Request) {
     };
     const created_at = new Date().toISOString();
 
-    const res = await client.images.generate(llm_params);
+    const proxyAgent = new HttpsProxyAgent("http://127.0.0.1:7890");
+
+    const res = await client.images.generate(llm_params, {httpAgent:proxyAgent});
+
     const raw_img_url = res.data[0].url;
     if (!raw_img_url) {
       return respErr("generate cover failed");

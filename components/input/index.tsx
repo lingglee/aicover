@@ -37,12 +37,6 @@ export default function () {
       return;
     }
 
-    if (user.credits && user.credits.left_credits < 1) {
-      toast.error("余额不足，请先充值");
-      router.push("/pricing");
-      return;
-    }
-
     try {
       const params = {
         description: description,

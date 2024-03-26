@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 
 import { AppContext } from "@/contexts/AppContext";
 import { Cover } from "@/types/cover";
-import Image from "next/image";
 
 export default function () {
   const { covers, setCovers } = useContext(AppContext);
@@ -62,7 +61,7 @@ export default function () {
                       key={idx}
                       className="relative overflow-hidden max-w-[280px] mx-auto cursor-pointer"
                     >
-                      <Image
+                      <img
                         src={cover.img_url}
                         alt={cover.img_description}
                         width="280"
