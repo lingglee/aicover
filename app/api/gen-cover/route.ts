@@ -9,6 +9,8 @@ import { getOpenAIClient } from "@/services/openai";
 import { getUserCredits } from "@/services/order";
 import { insertCover } from "@/models/cover";
 import { HttpsProxyAgent } from "https-proxy-agent";
+import { Word } from "@/types/word";
+import { insertWord } from "@/models/word";
 
 
 export async function POST(req: Request) {
@@ -30,53 +32,65 @@ export async function POST(req: Request) {
       //return respErr("credits not enough");
     }
 
+    const word : Word  = {
+      email: user_email,
+      word: words,
+      word_category: "unknown",
+      status: 1,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    console.log(word);
+
     const client = getOpenAIClient();
 
-    const llm_name = "dall-e-3";
-    const img_size = "1024x1792";
+    await insertWord(word);
 
-    const llm_params: ImageGenerateParams = {
-      prompt: `Generate a brand story image about ${words}`,
-      model: llm_name,
-      n: 1,
-      quality: "hd",
-      response_format: "url",
-      size: img_size,
-      style: "vivid",
-    };
-    const created_at = new Date().toISOString();
+    // const llm_name = "dall-e-3";
+    // const img_size = "1024x1792";
 
-    const proxyAgent = new HttpsProxyAgent("http://127.0.0.1:7890");
+    // const llm_params: ImageGenerateParams = {
+    //   prompt: `Generate a brand story image about ${words}`,
+    //   model: llm_name,
+    //   n: 1,
+    //   quality: "hd",
+    //   response_format: "url",
+    //   size: img_size,
+    //   style: "vivid",
+    // };
+    // const created_at = new Date().toISOString();
 
-    const res = await client.images.generate(llm_params, {httpAgent:proxyAgent});
+    // const proxyAgent = new HttpsProxyAgent("http://127.0.0.1:7890");
+    // const res = await client.images.generate(llm_params, {httpAgent:proxyAgent});
 
-    const raw_img_url = res.data[0].url;
-    if (!raw_img_url) {
-      return respErr("generate cover failed");
-    }
+    // const raw_img_url = res.data[0].url;
+    // if (!raw_img_url) {
+    //   return respErr("generate cover failed");
+    // }
 
-    const img_name = encodeURIComponent(words);
-    const s3_img = await downloadAndUploadImage(
-      raw_img_url,
-      process.env.AWS_BUCKET || "trysai",
-      `covers/${img_name}.png`
-    );
-    const img_url = s3_img.Location;
+    // const img_name = encodeURIComponent(words);
+    // const s3_img = await downloadAndUploadImage(
+    //   raw_img_url,
+    //   process.env.AWS_BUCKET || "trysai",
+    //   `covers/${img_name}.png`
+    // );
+    // const img_url = s3_img.Location;
 
-    const cover: Cover = {
-      user_email: user_email,
-      img_description: words,
-      img_size: img_size,
-      img_url: img_url,
-      llm_name: llm_name,
-      llm_params: JSON.stringify(llm_params),
-      created_at: created_at,
-      uuid: genUuid(),
-      status: 1,
-    };
-    await insertCover(cover);
+    // const cover: Cover = {
+    //   user_email: user_email,
+    //   img_description: words,
+    //   img_size: img_size,
+    //   img_url: img_url,
+    //   llm_name: llm_name,
+    //   llm_params: JSON.stringify(llm_params),
+    //   created_at: created_at,
+    //   uuid: genUuid(),
+    //   status: 1,
+    // };
+    // await insertCover(cover);
 
-    return respData(cover);
+    return respData(word);
   } catch (e) {
     console.log("gen cover failed: ", e);
     return respErr("gen cover failed");

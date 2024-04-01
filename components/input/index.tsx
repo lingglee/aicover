@@ -71,7 +71,7 @@ export default function () {
       toast.success("生成成功");
       if (data) {
         console.log("new cover", data);
-        setCovers((covers: Cover[]) => [data, ...covers]);
+        // setCovers((covers: Cover[]) => [data, ...covers]);
       }
     } catch (e) {
       console.log("gen cover failed", e);

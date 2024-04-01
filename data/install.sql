@@ -37,7 +37,7 @@ CREATE TABLE orders (
 
 CREATE TABLE words (
     id SERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    email VARCHAR(60) NOT NULL,
     word VARCHAR(255) NOT NULL,
     word_category VARCHAR(50),
     status SMALLINT NOT NULL,
