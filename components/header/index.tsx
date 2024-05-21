@@ -5,17 +5,14 @@ import Social from "@/components/social";
 import User from "@/components/user";
 import { useContext } from "react";
 
-export default function () {
+export default function Header() {
   const { user } = useContext(AppContext);
 
   const navigations: Nav[] = [
-    { name: "pricing", title: "价格", url: "/pricing", target: "_self" },
-    {
-      name: "doc",
-      title: "定制微信红包封面",
-      url: "https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1",
-      target: "_blank",
-    },
+    { name: "listen", title: "Listening", url: "/listen", target: "_self" },
+    { name: "speak", title: "Speaking", url: "/speak", target: "_self" },
+    { name: "read", title: "Reading", url: "/read", target: "_self" },
+    { name: "write", title: "Writing", url: "/write", target: "_self" },
   ];
 
   return (
@@ -26,18 +23,18 @@ export default function () {
             <a href="/" className="text-xl font-medium flex items-center">
               <img
                 src="/logo.png"
-                className="w-8 h-8 rounded-full mr-2"
+                className="w-14 h-14 rounded-full mr-2"
                 alt="logo"
               />
               <span className="font-bold text-primary text-2xl">
-                AI 红包封面
+                AI English Assistant
               </span>
             </a>
 
-            <div className="hidden md:flex ml-16">
+            <div className="hidden md:flex ml-24">
               {navigations.map((tab: Nav, idx: number) => (
                 <a
-                  className="text-md font-normal leading-6 text-gray-800 mx-4"
+                  className="text-md font-semibold leading-6 text-gray-800 mx-6 hover:text-primary transition-colors duration-200"
                   key={idx}
                   href={tab.url}
                   target={tab.target}

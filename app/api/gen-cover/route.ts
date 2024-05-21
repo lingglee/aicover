@@ -32,17 +32,6 @@ export async function POST(req: Request) {
       //return respErr("credits not enough");
     }
 
-    const word : Word  = {
-      email: user_email,
-      word: words,
-      word_category: "unknown",
-      status: 1,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
-    console.log(word);
-
     const client = getOpenAIClient();
 
     const proxyAgent = new HttpsProxyAgent("http://127.0.0.1:7890");
@@ -159,58 +148,21 @@ export async function POST(req: Request) {
         {role: "user", content: "Principles"},
         {role: "user", content: `Please return me a JSON data, where key is 'result' and value is the category name of the word '${words}`},
       ],
-      model: "gpt-4-turbo-preview"
+      model: "gpt-4-turbo-preview",
+      response_format: { type: "json_object" },
     }, {httpAgent:proxyAgent});
 
-    console.log(111)
-
-    console.log(completion.choices[0].message.content);
+    const res = JSON.parse(completion.choices[0].message.content || '');
+    const word : Word  = {
+      email: user_email,
+      word: words,
+      status: 1,
+      word_category: res.result,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
 
     await insertWord(word);
-
-    // const llm_name = "dall-e-3";
-    // const img_size = "1024x1792";
-
-    // const llm_params: ImageGenerateParams = {
-    //   prompt: `Generate a brand story image about ${words}`,
-    //   model: llm_name,
-    //   n: 1,
-    //   quality: "hd",
-    //   response_format: "url",
-    //   size: img_size,
-    //   style: "vivid",
-    // };
-    // const created_at = new Date().toISOString();
-
-    //const proxyAgent = new HttpsProxyAgent("http://127.0.0.1:7890");
-    //const res = await client.images.generate(llm_params, {httpAgent:proxyAgent});
-
-    // const raw_img_url = res.data[0].url;
-    // if (!raw_img_url) {
-    //   return respErr("generate cover failed");
-    // }
-
-    // const img_name = encodeURIComponent(words);
-    // const s3_img = await downloadAndUploadImage(
-    //   raw_img_url,
-    //   process.env.AWS_BUCKET || "trysai",
-    //   `covers/${img_name}.png`
-    // );
-    // const img_url = s3_img.Location;
-
-    // const cover: Cover = {
-    //   user_email: user_email,
-    //   img_description: words,
-    //   img_size: img_size,
-    //   img_url: img_url,
-    //   llm_name: llm_name,
-    //   llm_params: JSON.stringify(llm_params),
-    //   created_at: created_at,
-    //   uuid: genUuid(),
-    //   status: 1,
-    // };
-    // await insertCover(cover);
-
     return respData(word);
   } catch (e) {
     console.log("gen cover failed: ", e);

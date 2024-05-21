@@ -26,13 +26,13 @@ export default function () {
   const handleSubmit = async () => {
     console.log("vocabulary", vocabulary);
     if (!vocabulary) {
-      toast.error("请输入红包封面描述");
+      toast.error("Please enter a word to save");
       inputRef.current?.focus();
       return;
     }
 
     if (!user) {
-      toast.error("请先登录");
+      toast.error("Please log in first");
       router.push("/sign-in");
       return;
     }
@@ -54,7 +54,7 @@ export default function () {
       setLoading(false);
 
       if (resp.status === 401) {
-        toast.error("请先登录");
+        toast.error("Please log in first");
         router.push("/sign-in");
         return;
       }
@@ -68,7 +68,7 @@ export default function () {
       fetchUserInfo();
       setVocabulary("");
 
-      toast.success("生成成功");
+      toast.success("Success! Word saved and processed.");
       if (data) {
         console.log("new cover", data);
         // setCovers((covers: Cover[]) => [data, ...covers]);
@@ -83,7 +83,7 @@ export default function () {
       <input
         type="text"
         className="mb-1 h-9 w-full rounded-md border border-solid border-primary px-3 py-6 text-sm text-[#333333] focus:border-primary"
-        placeholder="请输入你的单词"
+        placeholder="Enter your vocabulary word"
         ref={inputRef}
         value={vocabulary}
         onChange={(e) => setVocabulary(e.target.value)}
@@ -94,14 +94,14 @@ export default function () {
           className="relative right-0 top-[5px] w-full cursor-pointer rounded-md bg-primary px-6 py-2 text-center font-semibold text-white sm:absolute sm:right-[5px] sm:w-auto"
           disabled
         >
-          保存中...
+          Processing...
         </button>
       ) : (
         <button
           className="relative right-0 top-[5px] w-full cursor-pointer rounded-md bg-primary border-primary px-6 py-2 text-center font-semibold text-white sm:absolute sm:right-[5px] sm:w-auto"
           onClick={handleSubmit}
         >
-          点击保存
+          Save Word
         </button>
       )}
     </div>
