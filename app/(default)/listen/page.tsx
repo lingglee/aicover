@@ -1,54 +1,79 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
-import { PlayIcon, PauseIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { Button } from "@/components/ui/button";
+import { PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
+
+interface Subtitle {
+  start: number;
+  end: number;
+  text: string;
+}
 
 export default function TedTalkPage() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentSentence, setCurrentSentence] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-
-  const transcript = [
-    "Welcome to the TED Talk.",
-    "In this talk, we will explore the wonders of science.",
-    "Our journey begins with a simple question.",
-    // Add the rest of the transcript sentences here...
-  ];
+  const [currentTime, setCurrentTime] = useState(0);
+  const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    if (isPlaying && currentSentence < transcript.length) {
-      const utterance = new SpeechSynthesisUtterance(transcript[currentSentence]);
-      utteranceRef.current = utterance;
+    fetch("/lifeifei.srt")
+      .then((response) => response.text())
+      .then((data) => {
+        const parsedSubtitles = parseSRT(data);
+        setSubtitles(parsedSubtitles);
+      });
+  }, []);
 
-      utterance.onboundary = (event) => {
-        const charIndex = event.charIndex;
-        const textLength = transcript[currentSentence].length;
-        setProgress((charIndex / textLength) * 100);
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.ontimeupdate = () => {
+        setCurrentTime(audio.currentTime);
       };
 
-      utterance.onend = () => {
-        setIsPlaying(false);
-        setProgress(100);
-      };
-
-      window.speechSynthesis.speak(utterance);
-    } else {
-      window.speechSynthesis.cancel();
-      setProgress(0);
+      if (isPlaying) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
     }
-  }, [isPlaying, currentSentence]);
+  }, [isPlaying]);
+
+  const parseSRT = (data: string): Subtitle[] => {
+    const regex = /(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n([\s\S]*?)(?=\n\n|\n*$)/g;
+    let match;
+    const result: Subtitle[] = [];
+    while ((match = regex.exec(data)) !== null) {
+      result.push({
+        start: parseTime(match[2]),
+        end: parseTime(match[3]),
+        text: match[4].replace(/\n/g, ' ')
+      });
+    }
+    return result;
+  };
+
+  const parseTime = (time: string): number => {
+    const [hours, minutes, seconds] = time.split(':');
+    const [secs, millis] = seconds.split(',');
+    return (
+      parseInt(hours, 10) * 3600 +
+      parseInt(minutes, 10) * 60 +
+      parseInt(secs, 10) +
+      parseInt(millis, 10) / 1000
+    );
+  };
+
+  const getCurrentSubtitle = (): string => {
+    const currentSubtitle = subtitles.find(
+      (subtitle) => currentTime >= subtitle.start && currentTime <= subtitle.end
+    );
+    return currentSubtitle ? currentSubtitle.text : '';
+  };
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
-  };
-
-  const handleNextSentence = () => {
-    if (currentSentence < transcript.length - 1) {
-      setCurrentSentence(currentSentence + 1);
-      setIsPlaying(true);
-    }
   };
 
   return (
@@ -78,13 +103,10 @@ export default function TedTalkPage() {
             <div className="h-1.5 bg-gray-300 absolute bottom-0 left-0 w-full">
               <div
                 className="h-1.5 bg-indigo-600"
-                style={{ width: `${progress}%` }}
+                style={{ width: `${(currentTime / (audioRef.current?.duration || 1)) * 100}%` }}
               ></div>
             </div>
-            <p className="text-lg text-gray-900">
-              {transcript[currentSentence]}
-            </p>
-            <p className="mt-2 text-sm text-gray-500">{`${currentSentence + 1}/${transcript.length}`}</p>
+            <p className="text-lg text-gray-900">{getCurrentSubtitle()}</p>
           </div>
           <div className="mt-6 flex justify-center gap-4">
             <Button
@@ -103,16 +125,10 @@ export default function TedTalkPage() {
                 </>
               )}
             </Button>
-            <Button
-              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md"
-              onClick={handleNextSentence}
-            >
-              Next Sentence
-              <ChevronRightIcon className="h-5 w-5 ml-2" aria-hidden="true" />
-            </Button>
           </div>
         </div>
       </div>
+      <audio ref={audioRef} src="/lifeifei.mp3"></audio>
     </div>
   );
 }
