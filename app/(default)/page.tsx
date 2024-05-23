@@ -55,14 +55,17 @@ export default function MainPage() {
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-20 w-20 text-white"
+                    className="h-16 w-16 text-white bg-black bg-opacity-50 rounded-full p-2"
+                    fill="none"
                     viewBox="0 0 24 24"
-                    fill="currentColor"
                     stroke="currentColor"
-                    strokeWidth="0"
                   >
-                    <circle cx="12" cy="12" r="12" fill="red" />
-                    <polygon points="10,8 16,12 10,16" fill="white" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M14.752 11.168l-6.012-3.507A1 1 0 007 8.507v6.986a1 1 0 001.74.757l6.012-3.507a1 1 0 000-1.744z"
+                    />
                   </svg>
                 </div>
               </div>

@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Nav } from "@/types/nav";
 import Social from "@/components/social";
 import User from "@/components/user";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // 仍然使用 next/navigation
 
 export default function Header() {
   const { user } = useContext(AppContext);
+  const [selectedTab, setSelectedTab] = useState("");
 
   const navigations: Nav[] = [
     { name: "listen", title: "Listening", url: "/listen", target: "_self" },
@@ -14,6 +16,13 @@ export default function Header() {
     { name: "read", title: "Reading", url: "/read", target: "_self" },
     { name: "write", title: "Writing", url: "/write", target: "_self" },
   ];
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      setSelectedTab(pathname);
+    }
+  }, []);
 
   return (
     <header>
@@ -34,7 +43,11 @@ export default function Header() {
             <div className="hidden md:flex ml-24">
               {navigations.map((tab: Nav, idx: number) => (
                 <a
-                  className="text-md font-semibold leading-6 text-gray-800 mx-6 hover:text-primary transition-colors duration-200"
+                  className={`text-md font-semibold leading-6 mx-6 transition-colors duration-200 ${
+                    selectedTab === tab.url
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-gray-800 hover:text-primary"
+                  }`}
                   key={idx}
                   href={tab.url}
                   target={tab.target}

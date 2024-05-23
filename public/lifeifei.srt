@@ -1,0 +1,1092 @@
+1
+00:00:04,334 --> 00:00:06,211
+Let me show you something.
+
+2
+00:00:06,253 --> 00:00:07,879
+To be precise,
+
+3
+00:00:07,921 --> 00:00:09,923
+I'm going to show you nothing.
+
+4
+00:00:10,423 --> 00:00:15,220
+This was the world 540 million years ago.
+
+5
+00:00:15,262 --> 00:00:17,973
+Pure, endless darkness.
+
+6
+00:00:18,723 --> 00:00:22,310
+It wasn't dark due to a lack of light.
+
+7
+00:00:22,602 --> 00:00:25,855
+It was dark because of a lack of sight.
+
+8
+00:00:27,566 --> 00:00:32,571
+Although sunshine did filter 1,000 meters
+
+9
+00:00:32,612 --> 00:00:34,990
+beneath the surface of ocean,
+
+10
+00:00:35,031 --> 00:00:40,370
+a light permeated from hydrothermal
+vents to seafloor,
+
+11
+00:00:40,370 --> 00:00:42,080
+brimming with life,
+
+12
+00:00:42,122 --> 00:00:47,168
+there was not a single eye
+to be found in these ancient waters.
+
+13
+00:00:47,669 --> 00:00:52,257
+No retinas, no corneas, no lenses.
+
+14
+00:00:52,632 --> 00:00:57,512
+So all this light,
+all this life went unseen.
+
+15
+00:00:57,971 --> 00:01:02,976
+There was a time that the very idea
+of seeing didn't exist.
+
+16
+00:01:03,351 --> 00:01:05,895
+It [had] simply never been done before.
+
+17
+00:01:06,438 --> 00:01:07,897
+Until it was.
+
+18
+00:01:09,274 --> 00:01:12,527
+So for reasons we're only
+beginning to understand,
+
+19
+00:01:12,569 --> 00:01:18,408
+trilobites, the first organisms
+that could sense light, emerged.
+
+20
+00:01:18,408 --> 00:01:24,205
+They're the first inhabitants
+of this reality that we take for granted.
+
+21
+00:01:24,247 --> 00:01:28,918
+First to discover that there is
+something other than oneself.
+
+22
+00:01:28,918 --> 00:01:31,338
+A world of many selves.
+
+23
+00:01:32,339 --> 00:01:37,093
+The ability to see is thought
+to have ushered in Cambrian explosion,
+
+24
+00:01:37,093 --> 00:01:41,431
+a period in which a huge
+variety of animal species
+
+25
+00:01:41,431 --> 00:01:43,808
+entered fossil records.
+
+26
+00:01:43,808 --> 00:01:46,853
+What began as a passive experience,
+
+27
+00:01:46,895 --> 00:01:50,357
+the simple act of letting light in,
+
+28
+00:01:50,357 --> 00:01:52,901
+soon became far more active.
+
+29
+00:01:53,443 --> 00:01:56,946
+The nervous system began to evolve.
+
+30
+00:01:56,988 --> 00:02:00,367
+Sight turning to insight.
+
+31
+00:02:00,367 --> 00:02:03,244
+Seeing became understanding.
+
+32
+00:02:03,244 --> 00:02:05,705
+Understanding led to actions.
+
+33
+00:02:05,705 --> 00:02:09,834
+And all these gave rise to intelligence.
+
+34
+00:02:10,669 --> 00:02:17,425
+Today, we're no longer satisfied with just
+nature's gift of visual intelligence.
+
+35
+00:02:17,425 --> 00:02:23,932
+Curiosity urges us to create machines
+to see just as intelligently as we can,
+
+36
+00:02:23,932 --> 00:02:25,725
+if not better.
+
+37
+00:02:25,725 --> 00:02:27,811
+Nine years ago, on this stage,
+
+38
+00:02:27,811 --> 00:02:32,232
+I delivered an early progress report
+on computer vision,
+
+39
+00:02:32,273 --> 00:02:34,734
+a subfield of artificial intelligence.
+
+40
+00:02:35,235 --> 00:02:39,781
+Three powerful forces
+converged for the first time.
+
+41
+00:02:39,823 --> 00:02:43,410
+Aa family of algorithms
+called neural networks.
+
+42
+00:02:43,410 --> 00:02:47,997
+Fast, specialized hardware
+called graphic processing units,
+
+43
+00:02:48,039 --> 00:02:49,624
+or GPUs.
+
+44
+00:02:49,666 --> 00:02:51,084
+And big data.
+
+45
+00:02:51,126 --> 00:02:57,382
+Like the 15 million images that my lab
+spent years curating called ImageNet.
+
+46
+00:02:57,382 --> 00:03:01,553
+Together, they ushered in
+the age of modern AI.
+
+47
+00:03:02,554 --> 00:03:04,139
+We've come a long way.
+
+48
+00:03:04,139 --> 00:03:08,685
+Back then, just putting labels on images
+was a big breakthrough.
+
+49
+00:03:09,352 --> 00:03:14,315
+But the speed and accuracy
+of these algorithms just improved rapidly.
+
+50
+00:03:14,816 --> 00:03:18,319
+The annual ImageNet
+challenge, led by my lab,
+
+51
+00:03:18,361 --> 00:03:21,364
+gauged the performance of this progress.
+
+52
+00:03:21,364 --> 00:03:24,951
+And on this plot, you're seeing
+the annual improvement
+
+53
+00:03:24,993 --> 00:03:27,120
+and milestone models.
+
+54
+00:03:27,787 --> 00:03:29,456
+We went a step further
+
+55
+00:03:29,456 --> 00:03:34,461
+and created algorithms
+that can segment objects
+
+56
+00:03:34,461 --> 00:03:37,839
+or predict the dynamic
+relationships among them
+
+57
+00:03:37,839 --> 00:03:41,426
+in these works done by my students
+and collaborators.
+
+58
+00:03:41,885 --> 00:03:43,428
+And there's more.
+
+59
+00:03:43,428 --> 00:03:47,891
+Recall last time I showed you
+the first computer-vision algorithm
+
+60
+00:03:47,932 --> 00:03:52,395
+that can describe a photo
+in human natural language.
+
+61
+00:03:52,729 --> 00:03:56,900
+That was work done with my brilliant
+former student, Andrej Karpathy.
+
+62
+00:03:57,484 --> 00:03:59,778
+At that time, I pushed my luck and said,
+
+63
+00:03:59,819 --> 00:04:02,864
+"Andrej, can we make computers
+to do the reverse?"
+
+64
+00:04:02,906 --> 00:04:05,825
+And Andrej said,
+"Ha ha, that's impossible."
+
+65
+00:04:05,867 --> 00:04:07,702
+Well, as you can see from this post,
+
+66
+00:04:07,744 --> 00:04:11,372
+recently the impossible
+has become possible.
+
+67
+00:04:11,998 --> 00:04:15,001
+That's thanks to a family
+of diffusion models
+
+68
+00:04:15,001 --> 00:04:18,546
+that powers today's
+generative AI algorithm,
+
+69
+00:04:18,546 --> 00:04:22,175
+which can take human-prompted sentences
+
+70
+00:04:22,175 --> 00:04:25,637
+and turn them into photos and videos
+
+71
+00:04:25,678 --> 00:04:28,306
+of something that's entirely new.
+
+72
+00:04:28,306 --> 00:04:33,603
+Many of you have seen the recent
+impressive results of Sora by OpenAI.
+
+73
+00:04:34,187 --> 00:04:37,941
+But even without the enormous
+number of GPUs,
+
+74
+00:04:37,941 --> 00:04:40,443
+my student and our collaborators
+
+75
+00:04:40,443 --> 00:04:44,864
+have developed a generative
+video model called Walt
+
+76
+00:04:44,906 --> 00:04:47,408
+months before Sora.
+
+77
+00:04:47,450 --> 00:04:50,036
+And you're seeing some of these results.
+
+78
+00:04:50,703 --> 00:04:53,414
+There is room for improvement.
+
+79
+00:04:53,414 --> 00:04:55,708
+I mean, look at that cat's eye
+
+80
+00:04:55,750 --> 00:04:59,087
+and the way it goes under the wave
+without ever getting wet.
+
+81
+00:04:59,546 --> 00:05:01,256
+What a cat-astrophe.
+
+82
+00:05:01,673 --> 00:05:04,384
+(Laughter)
+
+83
+00:05:04,425 --> 00:05:07,095
+And if past is prologue,
+
+84
+00:05:07,136 --> 00:05:11,808
+we will learn from these mistakes
+and create a future we imagine.
+
+85
+00:05:11,850 --> 00:05:13,643
+And in this future,
+
+86
+00:05:13,643 --> 00:05:17,272
+we want AI to do everything it can for us,
+
+87
+00:05:17,313 --> 00:05:19,190
+or to help us.
+
+88
+00:05:19,607 --> 00:05:22,068
+For years I have been saying
+
+89
+00:05:22,110 --> 00:05:26,489
+that taking a picture is not the same
+as seeing and understanding.
+
+90
+00:05:26,906 --> 00:05:30,034
+Today, I would like to add to that.
+
+91
+00:05:30,034 --> 00:05:33,204
+Simply seeing is not enough.
+
+92
+00:05:33,204 --> 00:05:36,416
+Seeing is for doing and learning.
+
+93
+00:05:36,833 --> 00:05:41,588
+When we act upon this world
+in 3D space and time,
+
+94
+00:05:41,629 --> 00:05:45,842
+we learn, and we learn
+to see and do better.
+
+95
+00:05:46,175 --> 00:05:50,638
+Nature has created this virtuous cycle
+of seeing and doing
+
+96
+00:05:50,680 --> 00:05:53,516
+powered by “spatial intelligence.”
+
+97
+00:05:54,142 --> 00:05:58,313
+To illustrate to you what your spatial
+intelligence is doing constantly,
+
+98
+00:05:58,354 --> 00:05:59,689
+look at this picture.
+
+99
+00:05:59,731 --> 00:06:02,734
+Raise your hand if you feel
+like you want to do something.
+
+100
+00:06:02,775 --> 00:06:04,152
+(Laughter)
+
+101
+00:06:04,193 --> 00:06:06,613
+In the last split of a second,
+
+102
+00:06:06,654 --> 00:06:09,741
+your brain looked
+at the geometry of this glass,
+
+103
+00:06:09,782 --> 00:06:12,785
+its place in 3D space,
+
+104
+00:06:12,827 --> 00:06:15,330
+its relationship with the table, the cat
+
+105
+00:06:15,371 --> 00:06:16,706
+and everything else.
+
+106
+00:06:16,706 --> 00:06:19,751
+And you can predict
+what's going to happen next.
+
+107
+00:06:20,501 --> 00:06:27,133
+The urge to act is innate to all beings
+with spatial intelligence,
+
+108
+00:06:27,133 --> 00:06:30,219
+which links perception with action.
+
+109
+00:06:30,637 --> 00:06:36,059
+And if we want to advance AI
+beyond its current capabilities,
+
+110
+00:06:36,059 --> 00:06:39,228
+we want more than AI
+that can see and talk.
+
+111
+00:06:39,270 --> 00:06:41,981
+We want AI that can do.
+
+112
+00:06:42,815 --> 00:06:46,653
+Indeed, we're making exciting progress.
+
+113
+00:06:46,694 --> 00:06:50,698
+The recent milestones
+in spatial intelligence
+
+114
+00:06:50,698 --> 00:06:54,619
+is teaching computers to see, learn, do
+
+115
+00:06:54,619 --> 00:06:56,829
+and learn to see and do better.
+
+116
+00:06:57,372 --> 00:06:59,082
+This is not easy.
+
+117
+00:06:59,123 --> 00:07:04,295
+It took nature millions of years
+to evolve spatial intelligence,
+
+118
+00:07:04,295 --> 00:07:07,006
+which depends on the eye taking light,
+
+119
+00:07:07,006 --> 00:07:09,717
+project 2D images on the retina
+
+120
+00:07:09,717 --> 00:07:13,721
+and the brain to translate
+these data into 3D information.
+
+121
+00:07:14,222 --> 00:07:17,809
+Only recently, a group
+of researchers from Google
+
+122
+00:07:17,850 --> 00:07:22,730
+are able to develop an algorithm
+to take a bunch of photos
+
+123
+00:07:22,730 --> 00:07:26,067
+and translate that into 3D space,
+
+124
+00:07:26,109 --> 00:07:28,361
+like the examples we're showing here.
+
+125
+00:07:29,070 --> 00:07:33,700
+My student and our collaborators
+have taken a step further
+
+126
+00:07:33,741 --> 00:07:38,162
+and created an algorithm
+that takes one input image
+
+127
+00:07:38,204 --> 00:07:40,790
+and turn that into 3D shape.
+
+128
+00:07:40,832 --> 00:07:42,792
+Here are more examples.
+
+129
+00:07:43,668 --> 00:07:49,090
+Recall, we talked about computer programs
+that can take a human sentence
+
+130
+00:07:49,132 --> 00:07:51,175
+and turn it into videos.
+
+131
+00:07:51,217 --> 00:07:55,263
+A group of researchers
+in University of Michigan
+
+132
+00:07:55,304 --> 00:07:59,100
+have figured out a way to translate
+that line of sentence
+
+133
+00:07:59,142 --> 00:08:02,520
+into 3D room layout, like shown here.
+
+134
+00:08:03,354 --> 00:08:06,691
+And my colleagues at Stanford
+and their students
+
+135
+00:08:06,691 --> 00:08:10,778
+have developed an algorithm
+that takes one image
+
+136
+00:08:10,820 --> 00:08:14,240
+and generates infinitely plausible spaces
+
+137
+00:08:14,240 --> 00:08:16,200
+for viewers to explore.
+
+138
+00:08:17,035 --> 00:08:23,291
+These are prototypes of the first
+budding signs of a future possibility.
+
+139
+00:08:23,332 --> 00:08:29,839
+One in which the human race
+can take our entire world
+
+140
+00:08:29,881 --> 00:08:32,091
+and translate it into digital forms
+
+141
+00:08:32,133 --> 00:08:34,886
+and model the richness and nuances.
+
+142
+00:08:35,303 --> 00:08:40,558
+What nature did to us implicitly
+in our individual minds,
+
+143
+00:08:40,600 --> 00:08:44,187
+spatial intelligence
+technology can hope to do
+
+144
+00:08:44,187 --> 00:08:46,397
+for our collective consciousness.
+
+145
+00:08:47,356 --> 00:08:51,319
+As the progress of spatial
+intelligence accelerates,
+
+146
+00:08:51,319 --> 00:08:56,908
+a new era in this virtuous cycle
+is taking place in front of our eyes.
+
+147
+00:08:56,908 --> 00:09:01,370
+This back and forth
+is catalyzing robotic learning,
+
+148
+00:09:01,412 --> 00:09:06,417
+a key component for any
+embodied intelligence system
+
+149
+00:09:06,417 --> 00:09:11,714
+that needs to understand
+and interact with the 3D world.
+
+150
+00:09:12,507 --> 00:09:14,133
+A decade ago,
+
+151
+00:09:14,175 --> 00:09:16,344
+ImageNet from my lab
+
+152
+00:09:16,385 --> 00:09:20,932
+enabled a database of millions
+of high-quality photos
+
+153
+00:09:20,932 --> 00:09:23,392
+to help train computers to see.
+
+154
+00:09:23,810 --> 00:09:28,564
+Today, we're doing the same
+with behaviors and actions
+
+155
+00:09:28,606 --> 00:09:33,402
+to train computers and robots
+how to act in the 3D world.
+
+156
+00:09:34,403 --> 00:09:37,657
+But instead of collecting static images,
+
+157
+00:09:37,657 --> 00:09:43,412
+we develop simulation environments
+powered by 3D spatial models
+
+158
+00:09:43,454 --> 00:09:48,793
+so that the computers can have
+infinite varieties of possibilities
+
+159
+00:09:48,793 --> 00:09:50,878
+to learn to act.
+
+160
+00:09:50,920 --> 00:09:55,550
+And you're just seeing
+a small number of examples
+
+161
+00:09:55,591 --> 00:09:57,009
+to teach our robots
+
+162
+00:09:57,009 --> 00:10:00,012
+in a project led by my lab
+called Behavior.
+
+163
+00:10:00,805 --> 00:10:06,644
+We’re also making exciting progress
+in robotic language intelligence.
+
+164
+00:10:06,644 --> 00:10:09,814
+Using large language model-based input,
+
+165
+00:10:09,814 --> 00:10:13,818
+my students and our collaborators
+are among the first teams
+
+166
+00:10:13,818 --> 00:10:19,365
+that can show a robotic arm
+performing a variety of tasks
+
+167
+00:10:19,407 --> 00:10:21,409
+based on verbal instructions,
+
+168
+00:10:21,409 --> 00:10:25,830
+like opening this drawer
+or unplugging a charged phone.
+
+169
+00:10:26,330 --> 00:10:31,460
+Or making sandwiches,
+using bread, lettuce, tomatoes
+
+170
+00:10:31,460 --> 00:10:34,505
+and even putting a napkin for the user.
+
+171
+00:10:34,505 --> 00:10:37,383
+Typically I would like
+a little more for my sandwich,
+
+172
+00:10:37,425 --> 00:10:39,302
+but this is a good start.
+
+173
+00:10:39,302 --> 00:10:40,469
+(Laughter)
+
+174
+00:10:40,970 --> 00:10:46,100
+In that primordial ocean,
+in our ancient times,
+
+175
+00:10:46,142 --> 00:10:49,979
+the ability to see and perceive
+one's environment
+
+176
+00:10:50,021 --> 00:10:55,151
+kicked off the Cambrian explosion
+of interactions with other life forms.
+
+177
+00:10:55,193 --> 00:10:59,822
+Today, that light
+is reaching the digital minds.
+
+178
+00:10:59,864 --> 00:11:03,367
+Spatial intelligence is allowing machines
+
+179
+00:11:03,409 --> 00:11:06,495
+to interact not only with one another,
+
+180
+00:11:06,537 --> 00:11:09,916
+but with humans, and with 3D worlds,
+
+181
+00:11:09,957 --> 00:11:11,876
+real or virtual.
+
+182
+00:11:12,251 --> 00:11:14,879
+And as that future is taking shape,
+
+183
+00:11:14,879 --> 00:11:18,674
+it will have a profound
+impact to many lives.
+
+184
+00:11:18,716 --> 00:11:21,594
+Let's take health care as an example.
+
+185
+00:11:21,636 --> 00:11:23,304
+For the past decade,
+
+186
+00:11:23,346 --> 00:11:26,807
+my lab has been taking
+some of the first steps
+
+187
+00:11:26,849 --> 00:11:32,438
+in applying AI to tackle challenges
+that impact patient outcome
+
+188
+00:11:32,438 --> 00:11:34,690
+and medical staff burnout.
+
+189
+00:11:34,732 --> 00:11:38,486
+Together with our collaborators
+from Stanford School of Medicine
+
+190
+00:11:38,486 --> 00:11:40,571
+and partnering hospitals,
+
+191
+00:11:40,571 --> 00:11:42,990
+we're piloting smart sensors
+
+192
+00:11:43,032 --> 00:11:46,744
+that can detect clinicians
+going into patient rooms
+
+193
+00:11:46,744 --> 00:11:49,747
+without properly washing their hands.
+
+194
+00:11:49,747 --> 00:11:53,084
+Or keep track of surgical instruments.
+
+195
+00:11:53,084 --> 00:11:57,004
+Or alert care teams when
+a patient is at physical risk,
+
+196
+00:11:57,004 --> 00:11:58,506
+such as falling.
+
+197
+00:11:59,465 --> 00:12:04,095
+We consider these techniques
+a form of ambient intelligence,
+
+198
+00:12:04,095 --> 00:12:08,307
+like extra pairs of eyes
+that do make a difference.
+
+199
+00:12:08,724 --> 00:12:14,480
+But I would like more interactive help
+for our patients, clinicians
+
+200
+00:12:14,522 --> 00:12:19,443
+and caretakers, who desperately
+also need an extra pair of hands.
+
+201
+00:12:19,860 --> 00:12:24,532
+Imagine an autonomous robot
+transporting medical supplies
+
+202
+00:12:24,573 --> 00:12:27,576
+while caretakers focus on our patients
+
+203
+00:12:27,618 --> 00:12:32,331
+or augmented reality,
+guiding surgeons to do safer, faster
+
+204
+00:12:32,373 --> 00:12:34,750
+and less invasive operations.
+
+205
+00:12:35,584 --> 00:12:42,425
+Or imagine patients with severe paralysis
+controlling robots with their thoughts.
+
+206
+00:12:42,466 --> 00:12:46,387
+That's right, brainwaves,
+to perform everyday tasks
+
+207
+00:12:46,429 --> 00:12:49,056
+that you and I take for granted.
+
+208
+00:12:49,098 --> 00:12:54,979
+You're seeing a glimpse of that future
+in this pilot study from my lab recently.
+
+209
+00:12:55,021 --> 00:13:00,985
+In this video, the robotic arm is cooking
+a Japanese sukiyaki meal
+
+210
+00:13:00,985 --> 00:13:05,448
+controlled only by the brain
+electrical signal,
+
+211
+00:13:05,489 --> 00:13:09,827
+non-invasively collected
+through an EEG cap.
+
+212
+00:13:10,661 --> 00:13:13,247
+(Applause)
+
+213
+00:13:13,289 --> 00:13:14,457
+Thank you.
+
+214
+00:13:16,292 --> 00:13:19,670
+The emergence of vision
+half a billion years ago
+
+215
+00:13:19,712 --> 00:13:23,049
+turned a world of darkness upside down.
+
+216
+00:13:23,090 --> 00:13:27,094
+It set off the most profound
+evolutionary process:
+
+217
+00:13:27,136 --> 00:13:31,098
+the development of intelligence
+in the animal world.
+
+218
+00:13:31,515 --> 00:13:36,896
+AI's breathtaking progress
+in the last decade is just as astounding.
+
+219
+00:13:37,730 --> 00:13:42,610
+But I believe the full potential
+of this digital Cambrian explosion
+
+220
+00:13:42,651 --> 00:13:49,158
+won't be fully realized until we power
+our computers and robots
+
+221
+00:13:49,158 --> 00:13:51,327
+with spatial intelligence,
+
+222
+00:13:51,369 --> 00:13:53,954
+just like what nature did to all of us.
+
+223
+00:13:55,081 --> 00:13:59,126
+It’s an exciting time to teach
+our digital companion
+
+224
+00:13:59,126 --> 00:14:00,795
+to learn to reason
+
+225
+00:14:00,836 --> 00:14:05,633
+and to interact with this beautiful
+3D space we call home,
+
+226
+00:14:05,674 --> 00:14:10,846
+and also create many more new worlds
+that we can all explore.
+
+227
+00:14:11,514 --> 00:14:14,392
+To realize this future won't be easy.
+
+228
+00:14:14,433 --> 00:14:18,896
+It requires all of us
+to take thoughtful steps
+
+229
+00:14:18,938 --> 00:14:23,359
+and develop technologies
+that always put humans in the center.
+
+230
+00:14:23,776 --> 00:14:25,986
+But if we do this right,
+
+231
+00:14:26,028 --> 00:14:29,865
+the computers and robots
+powered by spatial intelligence
+
+232
+00:14:29,907 --> 00:14:32,326
+will not only be useful tools
+
+233
+00:14:32,368 --> 00:14:34,954
+but also trusted partners
+
+234
+00:14:34,995 --> 00:14:39,125
+to enhance and augment
+our productivity and humanity
+
+235
+00:14:39,166 --> 00:14:42,086
+while respecting our individual dignity
+
+236
+00:14:42,128 --> 00:14:44,713
+and lifting our collective prosperity.
+
+237
+00:14:45,631 --> 00:14:49,343
+What excites me the most in the future
+
+238
+00:14:49,343 --> 00:14:54,014
+is a future in which that AI
+grows more perceptive,
+
+239
+00:14:54,056 --> 00:14:57,184
+insightful and spatially aware,
+
+240
+00:14:57,184 --> 00:15:00,104
+and they join us on our quest
+
+241
+00:15:00,104 --> 00:15:05,276
+to always pursue a better way
+to make a better world.
+
+242
+00:15:05,276 --> 00:15:06,485
+Thank you.
+
+243
+00:15:06,485 --> 00:15:10,781
+(Applause)
+
