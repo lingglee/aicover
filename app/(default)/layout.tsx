@@ -12,7 +12,6 @@ export default function ({ children }: { children: ReactNode }) {
       <div className="w-screen h-screen">
         <Header />
         <main>{children}</main>
-        <WordCards />
         <Footer />
       </div>
     </AppContextProvider>

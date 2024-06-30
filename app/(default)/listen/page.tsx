@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
+import { PlayIcon, ArrowRightIcon, ArrowUturnLeftIcon } from "@heroicons/react/20/solid";
 
 interface Subtitle {
   start: number;
@@ -10,10 +10,19 @@ interface Subtitle {
   text: string;
 }
 
+interface MaskedWord {
+  word: string;
+  index: number;
+  isVisible: boolean;
+}
+
 export default function TedTalkPage() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
+  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
+  const [maskedWords, setMaskedWords] = useState<MaskedWord[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -32,13 +41,11 @@ export default function TedTalkPage() {
         setCurrentTime(audio.currentTime);
       };
 
-      if (isPlaying) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
+      audio.onended = () => {
+        setIsPlaying(false);
+      };
     }
-  }, [isPlaying]);
+  }, []);
 
   const parseSRT = (data: string): Subtitle[] => {
     const regex = /(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n([\s\S]*?)(?=\n\n|\n*$)/g;
@@ -66,14 +73,116 @@ export default function TedTalkPage() {
   };
 
   const getCurrentSubtitle = (): string => {
-    const currentSubtitle = subtitles.find(
-      (subtitle) => currentTime >= subtitle.start && currentTime <= subtitle.end
+    if (subtitles[currentSubtitleIndex]) {
+      return subtitles[currentSubtitleIndex].text;
+    }
+    return '';
+  };
+
+  const maskWords = (text: string): MaskedWord[] => {
+    const words = text.split(' ');
+    const totalWords = words.length;
+    const numToMask = Math.floor(totalWords * 0.5); // 50% of the words
+    const indicesToMask = new Set<number>();
+
+    while (indicesToMask.size < numToMask) {
+      const randomIndex = Math.floor(Math.random() * totalWords);
+      indicesToMask.add(randomIndex);
+    }
+
+    return words.map((word, index) => ({
+      word,
+      index,
+      isVisible: !indicesToMask.has(index),
+    }));
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      const currentSubtitle = getCurrentSubtitle();
+      if (currentSubtitle) {
+        setMaskedWords(maskWords(currentSubtitle));
+      }
+    }
+  }, [isPlaying, currentSubtitleIndex]);
+
+  const toggleWordVisibility = (index: number) => {
+    setMaskedWords((prev) =>
+      prev.map((maskedWord) =>
+        maskedWord.index === index ? { ...maskedWord, isVisible: true } : maskedWord
+      )
     );
-    return currentSubtitle ? currentSubtitle.text : '';
+  };
+
+  const renderMaskedSubtitle = (text: string): JSX.Element => {
+    return (
+      <>
+        {text.split(' ').map((word, index) => {
+          const maskedWord = maskedWords.find((w) => w.index === index);
+          if (maskedWord && !maskedWord.isVisible) {
+            return (
+              <span
+                key={index}
+                onClick={() => toggleWordVisibility(index)}
+                className="cursor-pointer bg-gradient-to-r from-indigo-500 to-green-200 text-white px-2 rounded-md mx-1 inline-block"
+                style={{ width: `${word.length}ch` }}
+              >
+                &nbsp;
+              </span>
+            );
+          }
+          return <span key={index} className="text-gray-900 mx-1">{word}</span>;
+        })}
+      </>
+    );
   };
 
   const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
+    if (!hasStarted) {
+      setHasStarted(true);
+    }
+    playCurrentSubtitle();
+    setIsPlaying(true);
+  };
+
+  const playCurrentSubtitle = () => {
+    const audio = audioRef.current;
+    if (audio && subtitles[currentSubtitleIndex]) {
+      const { start, end } = subtitles[currentSubtitleIndex];
+      audio.currentTime = start;
+      audio.play();
+      const duration = (end - start) * 1000;
+      setTimeout(() => {
+        audio.pause();
+        setIsPlaying(false);
+      }, duration);
+    }
+  };
+
+  const handleNextSubtitle = () => {
+    const nextIndex = currentSubtitleIndex + 1;
+    if (nextIndex < subtitles.length) {
+      setCurrentSubtitleIndex(nextIndex);
+      playNextSubtitle(nextIndex);
+    }
+  };
+
+  const playNextSubtitle = (index: number) => {
+    const audio = audioRef.current;
+    if (audio && subtitles[index]) {
+      const { start, end } = subtitles[index];
+      audio.currentTime = start;
+      audio.play();
+      const duration = (end - start) * 1000;
+      setTimeout(() => {
+        audio.pause();
+        setIsPlaying(false);
+      }, duration);
+    }
+  };
+
+  const handleReplay = () => {
+    playCurrentSubtitle();
   };
 
   return (
@@ -106,17 +215,17 @@ export default function TedTalkPage() {
                 style={{ width: `${(currentTime / (audioRef.current?.duration || 1)) * 100}%` }}
               ></div>
             </div>
-            <p className="text-lg text-gray-900">{getCurrentSubtitle()}</p>
+            <p className="text-lg text-gray-900">{renderMaskedSubtitle(getCurrentSubtitle())}</p>
           </div>
           <div className="mt-6 flex justify-center gap-4">
             <Button
               className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md"
-              onClick={handlePlayPause}
+              onClick={hasStarted ? handleNextSubtitle : handlePlayPause}
             >
-              {isPlaying ? (
+              {hasStarted ? (
                 <>
-                  <PauseIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-                  Pause
+                  <ArrowRightIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+                  Next
                 </>
               ) : (
                 <>
@@ -124,6 +233,13 @@ export default function TedTalkPage() {
                   Play
                 </>
               )}
+            </Button>
+            <Button
+              className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md"
+              onClick={handleReplay}
+            >
+              <ArrowUturnLeftIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+              Retry
             </Button>
           </div>
         </div>

@@ -15,6 +15,7 @@ export default function Header() {
     { name: "speak", title: "Speaking", url: "/speak", target: "_self" },
     { name: "read", title: "Reading", url: "/read", target: "_self" },
     { name: "write", title: "Writing", url: "/write", target: "_self" },
+    { name: "vocabulary", title: "Vocabulary", url: "/vocabulary", target: "_self" },
   ];
 
   useEffect(() => {
