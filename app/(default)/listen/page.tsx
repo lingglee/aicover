@@ -23,6 +23,8 @@ export default function TedTalkPage() {
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
   const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
   const [maskedWords, setMaskedWords] = useState<MaskedWord[]>([]);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const [isRetryDisabled, setIsRetryDisabled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -82,7 +84,7 @@ export default function TedTalkPage() {
   const maskWords = (text: string): MaskedWord[] => {
     const words = text.split(' ');
     const totalWords = words.length;
-    const numToMask = Math.floor(totalWords * 0.5); // 50% of the words
+    const numToMask = Math.floor(totalWords * 0.7); // 70% of the words
     const indicesToMask = new Set<number>();
 
     while (indicesToMask.size < numToMask) {
@@ -104,7 +106,7 @@ export default function TedTalkPage() {
         setMaskedWords(maskWords(currentSubtitle));
       }
     }
-  }, [isPlaying, currentSubtitleIndex]);
+  }, [isPlaying, currentSubtitleIndex, subtitles]);
 
   const toggleWordVisibility = (index: number) => {
     setMaskedWords((prev) =>
@@ -160,11 +162,15 @@ export default function TedTalkPage() {
   };
 
   const handleNextSubtitle = () => {
+    setIsNextDisabled(true); // Disable the Next button
     const nextIndex = currentSubtitleIndex + 1;
     if (nextIndex < subtitles.length) {
       setCurrentSubtitleIndex(nextIndex);
       playNextSubtitle(nextIndex);
     }
+    setTimeout(() => {
+      setIsNextDisabled(false); // Re-enable the Next button after a delay
+    }, 500);
   };
 
   const playNextSubtitle = (index: number) => {
@@ -182,7 +188,11 @@ export default function TedTalkPage() {
   };
 
   const handleReplay = () => {
+    setIsRetryDisabled(true); // Disable the Retry button
     playCurrentSubtitle();
+    setTimeout(() => {
+      setIsRetryDisabled(false); // Re-enable the Retry button after a delay
+    }, 500);
   };
 
   return (
@@ -219,8 +229,9 @@ export default function TedTalkPage() {
           </div>
           <div className="mt-6 flex justify-center gap-4">
             <Button
-              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md"
+              className={`flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={hasStarted ? handleNextSubtitle : handlePlayPause}
+              disabled={isNextDisabled}
             >
               {hasStarted ? (
                 <>
@@ -235,8 +246,9 @@ export default function TedTalkPage() {
               )}
             </Button>
             <Button
-              className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md"
+              className={`flex items-center px-4 py-2 bg-red-600 text-white rounded-md ${isRetryDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={handleReplay}
+              disabled={isRetryDisabled}
             >
               <ArrowUturnLeftIcon className="h-5 w-5 mr-2" aria-hidden="true" />
               Retry
