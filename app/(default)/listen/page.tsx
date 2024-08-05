@@ -8,6 +8,7 @@ interface Subtitle {
   start: number;
   end: number;
   text: string;
+  maskedWords: MaskedWord[];
 }
 
 interface MaskedWord {
@@ -22,7 +23,6 @@ export default function TedTalkPage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
   const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
-  const [maskedWords, setMaskedWords] = useState<MaskedWord[]>([]);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [isRetryDisabled, setIsRetryDisabled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -53,7 +53,8 @@ export default function TedTalkPage() {
       result.push({
         start: parseTime(match[2]),
         end: parseTime(match[3]),
-        text: match[4].replace(/\n/g, ' ')
+        text: match[4].replace(/\n/g, ' '),
+        maskedWords: maskWords(match[4].replace(/\n/g, ' ')), // Initialize maskedWords
       });
     }
     return result;
@@ -70,8 +71,8 @@ export default function TedTalkPage() {
     );
   };
 
-  const getCurrentSubtitle = (): string => {
-    return subtitles[currentSubtitleIndex]?.text || '';
+  const getCurrentSubtitle = (): Subtitle => {
+    return subtitles[currentSubtitleIndex] || { text: '', maskedWords: [] };
   };
 
   const maskWords = (text: string): MaskedWord[] => {
@@ -90,37 +91,39 @@ export default function TedTalkPage() {
     }));
   };
 
-  useEffect(() => {
-    if (isPlaying) {
-      setMaskedWords(maskWords(getCurrentSubtitle()));
-    }
-  }, [isPlaying, currentSubtitleIndex, subtitles]);
-
   const toggleWordVisibility = (index: number) => {
-    setMaskedWords((prev) =>
-      prev.map((maskedWord) =>
-        maskedWord.index === index ? { ...maskedWord, isVisible: true } : maskedWord
+    setSubtitles((prevSubtitles) =>
+      prevSubtitles.map((subtitle, subtitleIndex) =>
+        subtitleIndex === currentSubtitleIndex
+          ? {
+              ...subtitle,
+              maskedWords: subtitle.maskedWords.map((maskedWord) =>
+                maskedWord.index === index
+                  ? { ...maskedWord, isVisible: !maskedWord.isVisible }
+                  : maskedWord
+              ),
+            }
+          : subtitle
       )
     );
   };
 
-  const renderMaskedSubtitle = (text: string): JSX.Element => (
+  const renderMaskedSubtitle = (maskedWords: MaskedWord[]): JSX.Element => (
     <>
-      {text.split(' ').map((word, index) => {
-        const maskedWord = maskedWords.find((w) => w.index === index);
-        if (maskedWord && !maskedWord.isVisible) {
+      {maskedWords.map((maskedWord, index) => {
+        if (!maskedWord.isVisible) {
           return (
             <span
               key={index}
-              onClick={() => toggleWordVisibility(index)}
+              onClick={() => toggleWordVisibility(maskedWord.index)}
               className="cursor-pointer bg-gradient-to-r from-indigo-500 to-green-200 text-white px-2 rounded-md mx-1 inline-block"
-              style={{ width: `${word.length}ch` }}
+              style={{ width: `${maskedWord.word.length}ch` }}
             >
               &nbsp;
             </span>
           );
         }
-        return <span key={index} className="text-gray-900 mx-1">{word}</span>;
+        return <span key={index} className="text-gray-900 mx-1">{maskedWord.word}</span>;
       })}
     </>
   );
@@ -131,6 +134,7 @@ export default function TedTalkPage() {
       const { start, end } = subtitles[currentSubtitleIndex];
       audio.currentTime = start;
       audio.play();
+      setIsPlaying(true);
       setTimeout(() => {
         audio.pause();
         setIsPlaying(false);
@@ -141,7 +145,6 @@ export default function TedTalkPage() {
   const handlePlayPause = () => {
     if (!hasStarted) setHasStarted(true);
     playCurrentSubtitle();
-    setIsPlaying(true);
   };
 
   const handleNextSubtitle = () => {
@@ -160,6 +163,7 @@ export default function TedTalkPage() {
       const { start, end } = subtitles[index];
       audio.currentTime = start;
       audio.play();
+      setIsPlaying(true);
       setTimeout(() => {
         audio.pause();
         setIsPlaying(false);
@@ -172,6 +176,8 @@ export default function TedTalkPage() {
     playCurrentSubtitle();
     setTimeout(() => setIsRetryDisabled(false), 500);
   };
+
+  const currentSubtitle = getCurrentSubtitle();
 
   return (
     <div className="relative isolate bg-white px-6 py-8 md:py-16 lg:px-8">
@@ -203,7 +209,7 @@ export default function TedTalkPage() {
                 style={{ width: `${(currentTime / (audioRef.current?.duration || 1)) * 100}%` }}
               ></div>
             </div>
-            <p className="text-lg text-gray-900">{renderMaskedSubtitle(getCurrentSubtitle())}</p>
+            <p className="text-lg text-gray-900">{renderMaskedSubtitle(currentSubtitle.maskedWords)}</p>
           </div>
           <div className="mt-6 flex justify-center gap-4">
             <Button
