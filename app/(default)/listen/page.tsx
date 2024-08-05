@@ -28,31 +28,27 @@ export default function TedTalkPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    fetch("/lifeifei.srt")
+    fetch("https://wanglingguang.s3.ap-southeast-2.amazonaws.com/lifeifei.srt")
       .then((response) => response.text())
       .then((data) => {
         const parsedSubtitles = parseSRT(data);
         setSubtitles(parsedSubtitles);
-      });
+      })
+      .catch((error) => console.error("Error fetching subtitle file:", error));
   }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.ontimeupdate = () => {
-        setCurrentTime(audio.currentTime);
-      };
-
-      audio.onended = () => {
-        setIsPlaying(false);
-      };
+      audio.ontimeupdate = () => setCurrentTime(audio.currentTime);
+      audio.onended = () => setIsPlaying(false);
     }
   }, []);
 
   const parseSRT = (data: string): Subtitle[] => {
     const regex = /(\d+)\n(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\n([\s\S]*?)(?=\n\n|\n*$)/g;
-    let match;
     const result: Subtitle[] = [];
+    let match;
     while ((match = regex.exec(data)) !== null) {
       result.push({
         start: parseTime(match[2]),
@@ -75,21 +71,16 @@ export default function TedTalkPage() {
   };
 
   const getCurrentSubtitle = (): string => {
-    if (subtitles[currentSubtitleIndex]) {
-      return subtitles[currentSubtitleIndex].text;
-    }
-    return '';
+    return subtitles[currentSubtitleIndex]?.text || '';
   };
 
   const maskWords = (text: string): MaskedWord[] => {
     const words = text.split(' ');
-    const totalWords = words.length;
-    const numToMask = Math.floor(totalWords * 0.7); // 70% of the words
+    const numToMask = Math.floor(words.length * 0.7);
     const indicesToMask = new Set<number>();
 
     while (indicesToMask.size < numToMask) {
-      const randomIndex = Math.floor(Math.random() * totalWords);
-      indicesToMask.add(randomIndex);
+      indicesToMask.add(Math.floor(Math.random() * words.length));
     }
 
     return words.map((word, index) => ({
@@ -101,10 +92,7 @@ export default function TedTalkPage() {
 
   useEffect(() => {
     if (isPlaying) {
-      const currentSubtitle = getCurrentSubtitle();
-      if (currentSubtitle) {
-        setMaskedWords(maskWords(currentSubtitle));
-      }
+      setMaskedWords(maskWords(getCurrentSubtitle()));
     }
   }, [isPlaying, currentSubtitleIndex, subtitles]);
 
@@ -116,36 +104,26 @@ export default function TedTalkPage() {
     );
   };
 
-  const renderMaskedSubtitle = (text: string): JSX.Element => {
-    return (
-      <>
-        {text.split(' ').map((word, index) => {
-          const maskedWord = maskedWords.find((w) => w.index === index);
-          if (maskedWord && !maskedWord.isVisible) {
-            return (
-              <span
-                key={index}
-                onClick={() => toggleWordVisibility(index)}
-                className="cursor-pointer bg-gradient-to-r from-indigo-500 to-green-200 text-white px-2 rounded-md mx-1 inline-block"
-                style={{ width: `${word.length}ch` }}
-              >
-                &nbsp;
-              </span>
-            );
-          }
-          return <span key={index} className="text-gray-900 mx-1">{word}</span>;
-        })}
-      </>
-    );
-  };
-
-  const handlePlayPause = () => {
-    if (!hasStarted) {
-      setHasStarted(true);
-    }
-    playCurrentSubtitle();
-    setIsPlaying(true);
-  };
+  const renderMaskedSubtitle = (text: string): JSX.Element => (
+    <>
+      {text.split(' ').map((word, index) => {
+        const maskedWord = maskedWords.find((w) => w.index === index);
+        if (maskedWord && !maskedWord.isVisible) {
+          return (
+            <span
+              key={index}
+              onClick={() => toggleWordVisibility(index)}
+              className="cursor-pointer bg-gradient-to-r from-indigo-500 to-green-200 text-white px-2 rounded-md mx-1 inline-block"
+              style={{ width: `${word.length}ch` }}
+            >
+              &nbsp;
+            </span>
+          );
+        }
+        return <span key={index} className="text-gray-900 mx-1">{word}</span>;
+      })}
+    </>
+  );
 
   const playCurrentSubtitle = () => {
     const audio = audioRef.current;
@@ -153,24 +131,27 @@ export default function TedTalkPage() {
       const { start, end } = subtitles[currentSubtitleIndex];
       audio.currentTime = start;
       audio.play();
-      const duration = (end - start) * 1000;
       setTimeout(() => {
         audio.pause();
         setIsPlaying(false);
-      }, duration);
+      }, (end - start) * 1000);
     }
   };
 
+  const handlePlayPause = () => {
+    if (!hasStarted) setHasStarted(true);
+    playCurrentSubtitle();
+    setIsPlaying(true);
+  };
+
   const handleNextSubtitle = () => {
-    setIsNextDisabled(true); // Disable the Next button
+    setIsNextDisabled(true);
     const nextIndex = currentSubtitleIndex + 1;
     if (nextIndex < subtitles.length) {
       setCurrentSubtitleIndex(nextIndex);
       playNextSubtitle(nextIndex);
     }
-    setTimeout(() => {
-      setIsNextDisabled(false); // Re-enable the Next button after a delay
-    }, 500);
+    setTimeout(() => setIsNextDisabled(false), 500);
   };
 
   const playNextSubtitle = (index: number) => {
@@ -179,20 +160,17 @@ export default function TedTalkPage() {
       const { start, end } = subtitles[index];
       audio.currentTime = start;
       audio.play();
-      const duration = (end - start) * 1000;
       setTimeout(() => {
         audio.pause();
         setIsPlaying(false);
-      }, duration);
+      }, (end - start) * 1000);
     }
   };
 
   const handleReplay = () => {
-    setIsRetryDisabled(true); // Disable the Retry button
+    setIsRetryDisabled(true);
     playCurrentSubtitle();
-    setTimeout(() => {
-      setIsRetryDisabled(false); // Re-enable the Retry button after a delay
-    }, 500);
+    setTimeout(() => setIsRetryDisabled(false), 500);
   };
 
   return (
@@ -256,7 +234,7 @@ export default function TedTalkPage() {
           </div>
         </div>
       </div>
-      <audio ref={audioRef} src="/lifeifei.mp3"></audio>
+      <audio ref={audioRef} src="https://wanglingguang.s3.ap-southeast-2.amazonaws.com/lifeifei.mp3"></audio>
     </div>
   );
 }
